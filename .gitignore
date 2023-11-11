@@ -1,0 +1,4 @@
+.idea
+node_modules
+write/build
+write/frontend/dist
