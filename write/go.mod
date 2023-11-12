@@ -3,6 +3,7 @@ module changeme
 go 1.18
 
 require (
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/wailsapp/wails/v2 v2.6.0
 	github.com/yuin/goldmark v1.4.13
 )

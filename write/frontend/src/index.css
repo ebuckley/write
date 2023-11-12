@@ -1,3 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .markdown-content a {
+        @apply text-blue-500 underline hover:text-blue-700 transition-colors duration-200;
+    }
+
+    .markdown-content h1 {
+        @apply text-gray-900 py-2 font-sans font-bold break-normal text-2xl;
+    }
+
+    .markdown-content pre {
+        @apply rounded  break-words whitespace-pre-wrap font-mono;
+    }
+
+    .markdown-content p {
+        @apply pt-3 pb-5;
+    }
+
+    .markdown-content h2 {
+        @apply text-gray-900 py-2 font-sans font-bold break-normal text-xl;
+    }
+
+    .markdown-content blockquote {
+        @apply border-l-4 border-green-500 italic my-8 pl-8 md:pl-12;
+    }
+
+    .markdown-content ul {
+        @apply list-disc list-inside;
+    }
+
+    .markdown-content li {
+        @apply pl-3;
+    }
+}
