@@ -12,3 +12,15 @@ IF you're interested in using tailwind and react to make a tiny bundle for a fro
 wails init -n write -t https://github.com/hotafrika/wails-vite-react-ts-tailwind-template
 cd writer
 ```
+
+
+## Step 2:
+
+- "Design" the application: https://v0.dev/t/OpQCijO6Hm8
+- Implement the markdown renderer, see lib/markdown.go and `app.SendMarkdownToRenderer`
+- Now you can write markdown!
+
+## Step 3:
+
+- Implement all the other buttons etc etc
+- 
