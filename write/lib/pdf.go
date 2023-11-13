@@ -44,7 +44,7 @@ func Pdf(path string, content string) error {
 
 	baseMargin := pdf.GetX()
 
-	renderfuncs := map[ast.NodeKind]rFunc{
+	renderFuncs := map[ast.NodeKind]rFunc{
 		ast.KindHeading: func(source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
 			if entering {
 				pdf.SetFont("Arial", "", 24)
@@ -90,8 +90,11 @@ func Pdf(path string, content string) error {
 			return ast.WalkContinue, nil
 		},
 		ast.KindList: func(source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
-			node.Dump(source, 2)
 			if entering {
+				// if it's previous sibling is a paragraph then delete that paragraph margin!!
+				if node.PreviousSibling() != nil && node.PreviousSibling().Kind() == ast.KindParagraph {
+					pdf.SetY(pdf.GetY() - 1.5*baseHeight)
+				}
 				lineIndentLevel += 1
 			} else {
 				pdf.SetLeftMargin(baseMargin)
@@ -108,7 +111,7 @@ func Pdf(path string, content string) error {
 			return ast.WalkContinue, nil
 		},
 	}
-	rdr := goldmark.New(goldmark.WithRenderer(&pdfRenderer{pdf, renderfuncs}))
+	rdr := goldmark.New(goldmark.WithRenderer(&pdfRenderer{pdf, renderFuncs}))
 
 	var wr io.Writer
 	err := rdr.Convert([]byte(content), wr)
