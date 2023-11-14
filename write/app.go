@@ -118,3 +118,23 @@ func (a *App) Open() (FileWithContent, error) {
 		HTML:    a.renderedHTML,
 	}, nil
 }
+
+func (a *App) Export() error {
+	hd, err := homedir.Dir()
+	if err != nil {
+		return err
+	}
+	chosenPath, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		DefaultDirectory:           path.Join(hd, "Documents"),
+		DefaultFilename:            a.filename,
+		Title:                      "Export to PDF",
+		ShowHiddenFiles:            false,
+		CanCreateDirectories:       true,
+		TreatPackagesAsDirectories: true,
+	})
+	if err != nil {
+		return err
+	}
+
+	return lib.Pdf(chosenPath, a.markdown)
+}

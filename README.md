@@ -23,4 +23,14 @@ cd writer
 ## Step 3:
 
 - Implement all the other buttons etc etc
-- 
+- Save Button, Open Button, New Button.
+
+## Step 4:
+
+Creating the pdf export, a huge yackshave, but lets gooo!
+
+- Pdf renderer has a really interesting and useful abstraction with the Walk function and the abillity to skip children.
+- It's not feature complete, but we have a good base of links, headings etc etc.
+- Wiring up the export function is pretty straightforward!
+
+It really ain't pretty yet, lets make something cool...

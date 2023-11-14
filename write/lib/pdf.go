@@ -16,6 +16,7 @@ type pdfRenderer struct {
 
 func (p *pdfRenderer) Render(w io.Writer, source []byte, n ast.Node) error {
 
+	n.Dump(source, 2)
 	err := ast.Walk(n, func(n ast.Node, entering bool) (ast.WalkStatus, error) {
 		s := ast.WalkStatus(ast.WalkContinue)
 		if cb, ok := p.renderFuncs[n.Kind()]; ok {
@@ -46,8 +47,15 @@ func Pdf(path string, content string) error {
 
 	renderFuncs := map[ast.NodeKind]rFunc{
 		ast.KindHeading: func(source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
+			hd := node.(*ast.Heading)
+			sizeMap := map[int]float64{
+				1: 24,
+				2: 18,
+				3: 16,
+				4: 14,
+			}
 			if entering {
-				pdf.SetFont("Arial", "", 24)
+				pdf.SetFont("Arial", "", sizeMap[hd.Level])
 				pdf.MultiCell(0, baseHeight, string(node.Text(source)), "", "", false)
 			} else {
 				pdf.MultiCell(0, p1, "", "", "", false)
@@ -97,6 +105,7 @@ func Pdf(path string, content string) error {
 				}
 				lineIndentLevel += 1
 			} else {
+				pdf.Ln(baseHeight)
 				pdf.SetLeftMargin(baseMargin)
 				lineIndentLevel -= 1
 			}
@@ -107,6 +116,19 @@ func Pdf(path string, content string) error {
 				pdf.Ln(baseHeight)
 				pdf.SetLeftMargin(baseMargin + float64(lineIndentLevel)*2)
 				pdf.Write(baseHeight, "- ")
+			}
+			return ast.WalkContinue, nil
+		},
+		ast.KindFencedCodeBlock: func(source []byte, node ast.Node, entering bool) (ast.WalkStatus, error) {
+			if entering {
+				// y u no text content?? :(:(
+				cd := node.(*ast.FencedCodeBlock)
+				txt := string(cd.Info.Text(source))
+				// TODO make text content render properly...
+				pdf.SetFont("Courier", "", fontSize)
+				pdf.MultiCell(0, p1, "", "", "", false)
+				pdf.MultiCell(0, baseHeight, txt, "", "", false)
+				pdf.MultiCell(0, p1, "", "", "", false)
 			}
 			return ast.WalkContinue, nil
 		},

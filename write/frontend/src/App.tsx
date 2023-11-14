@@ -1,5 +1,5 @@
 import './App.css'
-import {Save, SendMarkdownToRenderer, Open} from "../wailsjs/go/main/App";
+import {Save, SendMarkdownToRenderer, Open, Export} from "../wailsjs/go/main/App";
 import {useRef, useState} from "react";
 
 function App() {
@@ -35,14 +35,18 @@ function App() {
   const openAction = async () => {
     const res = await Open();
     setMd(res.html ?? "")
-    debugger
     if (ref.current) {
       ref.current.value = res.content ?? "";
     }
     setFileName(res.name ?? "")
   }
   const exportAction = async () => {
-
+    try {
+      await Export();
+      alert('exported! to file');
+    } catch (e) {
+      alert("error: " + e.toString())
+    }
   }
   return (
     <div className="flex h-screen flex-col bg-white dark:bg-gray-800">
