@@ -29,12 +29,11 @@ jobs:
           cd write
           go test ./...
       - name: Package
-        working-directory: write/scripts
+        working-directory: write
         run: |
-          chmod +x *.sh
-          ./build-windows.sh
+          wails build --clean --platform windows/amd64
           cp ../build/bin/write.exe ../build/write-windows.exe
-          ./build-linux.sh
+          wails build --clean
           cp ../build/bin/write ../build/write-linux
       - name: Release
         uses: softprops/action-gh-release@v1
