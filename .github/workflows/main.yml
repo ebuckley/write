@@ -37,6 +37,7 @@ jobs:
           cp build/bin/write build/write-linux
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/v') # only run on tags strting with v
         with:
           files: |
             write/build/write-windows.exe
