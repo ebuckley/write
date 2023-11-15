@@ -40,6 +40,8 @@ It really ain't pretty yet, lets make something cool...
 
 Eat your vegetables, time to setup CI/CD and make a release! Yea, you should probably do this as step 1, but being true to the reality of how i worked on this, I'm putting it as step 5.
 
+Here is the high level steps I took a look through..
+
 - Figuring out the production build, windows/linux cross build and copying the binary for later
-- Figuring out the release process. https://github.com/elgohr/Github-Release-Action
-- Push your code about six times to re-create the 
+- Figuring out the release process. https://github.com/softprops/action-gh-release 
+- Push your code about six times to get build syntax right
