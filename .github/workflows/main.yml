@@ -29,7 +29,7 @@ jobs:
           ./build-linux.sh
           cp ../build/bin/write ../build/write-linux
       - name: Release
-        uses: softprops/action-gh-release
+        uses: softprops/action-gh-release@latest
         with:
           files: |
             write/build/write-windows.exe
