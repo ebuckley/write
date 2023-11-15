@@ -45,3 +45,4 @@ Here is the high level steps I took a look through..
 - Figuring out the production build, windows/linux cross build and copying the binary for later
 - Figuring out the release process. https://github.com/softprops/action-gh-release 
 - Push your code about six times to get build syntax right
+- attempt to use a provided github action to matrix build, works for nix but not for windows due to obscure reasons. I think for this simple app a cross compile should be fine, so I'm just going to go with a cross compiled app for simplicity
