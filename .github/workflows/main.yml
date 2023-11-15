@@ -20,6 +20,7 @@ jobs:
           cd write/scripts
           ./install-wails-cli.sh
           cd ..
+          wails doctor
           wails build
       - name: Tests
         run: |
