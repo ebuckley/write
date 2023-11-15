@@ -15,11 +15,17 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.21
-      - name: Run tests
+      - name: Build
+        run: |
+          cd write/scripts
+          install-wails-cli.sh
+          cd ../..
+          wails build
+      - name: Tests
         run: |
           cd write
           go test ./...
-      - name: Build and package
+      - name: Package
         run: |
           cd write/scripts
           chmod +x ./*.sh
