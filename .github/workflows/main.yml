@@ -32,9 +32,9 @@ jobs:
         working-directory: write
         run: |
           wails build --clean --platform windows/amd64
-          cp ../build/bin/write.exe ../build/write-windows.exe
+          cp build/bin/write.exe build/write-windows.exe
           wails build --clean
-          cp ../build/bin/write ../build/write-linux
+          cp build/bin/write build/write-linux
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
