@@ -19,7 +19,7 @@ jobs:
         run: |
           cd write/scripts
           ./install-wails-cli.sh
-          cd ../..
+          cd ..
           wails build
       - name: Tests
         run: |
