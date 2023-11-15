@@ -29,9 +29,9 @@ jobs:
           cd write
           go test ./...
       - name: Package
+        working-directory: write/scripts
         run: |
-          cd write/scripts
-          chmod +x ./*.sh
+          chmod +x *.sh
           ./build-windows.sh
           cp ../build/bin/write.exe ../build/write-windows.exe
           ./build-linux.sh
