@@ -1,0 +1,36 @@
+name: Build and Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Go 1.21
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21
+      - name: Run tests
+        run: |
+          cd write
+          go test ./...
+      - name: Build and package
+        run: |
+          cd write/scripts
+          chmod +x ./*.sh
+          install-wails-cli.sh
+          ./build-windows.sh
+          cp ../build/bin/write.exe ../build/write-windows.exe
+          ./build-linux.sh
+          cp ../build/bin/write ../build/write-linux
+      - name: Release
+        uses: softprops/action-gh-release@
+        with:
+          files: |
+            write/build/write-windows.exe
+            write/build/write-linux

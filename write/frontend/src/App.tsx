@@ -45,6 +45,7 @@ function App() {
       await Export();
       alert('exported! to file');
     } catch (e) {
+      // @ts-ignore shhh!
       alert("error: " + e.toString())
     }
   }
