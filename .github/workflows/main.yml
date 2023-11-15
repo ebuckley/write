@@ -32,7 +32,6 @@ jobs:
         run: |
           cd write/scripts
           chmod +x ./*.sh
-          install-wails-cli.sh
           ./build-windows.sh
           cp ../build/bin/write.exe ../build/write-windows.exe
           ./build-linux.sh
