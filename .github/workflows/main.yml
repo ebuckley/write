@@ -5,39 +5,21 @@ on:
       - main
 jobs:
   build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        build: [
+          {name: write, platform: linux/amd64, os: ubuntu-latest},
+          {name: write, platform: windows/amd64, os: windows-latest}
+        ]
+    runs-on: ${{ matrix.build.os }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Go 1.21
-        uses: actions/setup-go@v2
+      - uses: actions/checkout@v2
         with:
-          go-version: 1.21
-      - name: Build
-        run: |
-          cd write/scripts
-          ./install-wails-cli.sh
-          cd ..
-          wails doctor
-          wails build
-      - name: Tests
-        run: |
-          cd write
-          go test ./...
-      - name: Package
-        run: |
-          cd write/scripts
-          chmod +x ./*.sh
-          install-wails-cli.sh
-          ./build-windows.sh
-          cp ../build/bin/write.exe ../build/write-windows.exe
-          ./build-linux.sh
-          cp ../build/bin/write ../build/write-linux
-      - name: Release
-        uses: softprops/action-gh-release@v1
+          submodules: recursive
+      - uses: dAppServer/wails-build-action@v2.2
         with:
-          files: |
-            write/build/write-windows.exe
-            write/build/write-linux
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          package: true
+          app-working-directory: write
